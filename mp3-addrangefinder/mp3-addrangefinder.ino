@@ -9,8 +9,8 @@
 #include <SPI.h>
 
 // rangefinder
-#define echoPin 7 // Echo Pin
-#define trigPin 8 // Trigger Pin
+#define echoPin 8 // Echo Pin
+#define trigPin 9 // Trigger Pin
 #define LEDPin 13 // Onboard LED
 
 int maximumRange = 450; // Maximum range needed
@@ -97,12 +97,12 @@ void loop()
 
 
   // play mp3 if range is < 2 feet
-  if(inchDistance < 20) {
+  if(inchDistance < 6) {
     Serial.println("playing music 1");
     //myDFPlayer.play(1);  //Play the first mp3
     myDFPlayer.playMp3Folder(1);
     delay(8000);
-  } else if(inchDistance < 40) {
+  } else if(inchDistance < 20) {
     Serial.println("playing music 2");
     myDFPlayer.playMp3Folder(2);
     delay(8000);
