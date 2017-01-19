@@ -124,9 +124,9 @@ void loop()
   // Create 16 bits values from 8 bits data
   
   // Accelerometer
-  int16_t ax=-(Buf[0]<<8 | Buf[1]);
-  int16_t ay=-(Buf[2]<<8 | Buf[3]);
-  int16_t az=Buf[4]<<8 | Buf[5];
+  int16_t ax=-(Buf[0]<<8 | Buf[1]) - 725;
+  int16_t ay=-(Buf[2]<<8 | Buf[3]) - 280;
+  int16_t az=(Buf[4]<<8 | Buf[5]) - 8375;
 
   // Gyroscope
   int16_t gx=-(Buf[8]<<8 | Buf[9]);
@@ -134,6 +134,7 @@ void loop()
   int16_t gz=Buf[12]<<8 | Buf[13];
   
     // Display values
+
   
   // Accelerometer
   Serial.print (ax,DEC); 
@@ -142,7 +143,8 @@ void loop()
   Serial.print ("\t");
   Serial.print (az,DEC);  
   Serial.print ("\t");
-  
+
+/*  
   // Gyroscope
   Serial.print (gx,DEC); 
   Serial.print ("\t");
@@ -150,7 +152,7 @@ void loop()
   Serial.print ("\t");
   Serial.print (gz,DEC);  
   Serial.print ("\t");
-
+*/
   
   // _____________________
   // :::  Magnetometer ::: 
@@ -177,7 +179,8 @@ void loop()
   int16_t my=-(Mag[1]<<8 | Mag[0]);
   int16_t mz=-(Mag[5]<<8 | Mag[4]);
   
-  
+
+  /*
   // Magnetometer
   Serial.print (mx+200,DEC); 
   Serial.print ("\t");
@@ -185,7 +188,7 @@ void loop()
   Serial.print ("\t");
   Serial.print (mz-700,DEC);  
   Serial.print ("\t");
-  
+  */
   
   
   // End of line
