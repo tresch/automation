@@ -136,8 +136,8 @@ void loop()
   
   int uuidIndex = tags.indexOf("8D773D3823A04DACAA99643641521901");
   
-  ///Serial.print("index is: ");
-  ///Serial.println(uuidIndex);
+  //Serial.print("index is: ");
+  //Serial.println(uuidIndex);
   
   if(uuidIndex > -1 && tags.length() >= (uuidIndex + 61)) {
     String message = tags.substring(uuidIndex, uuidIndex+61);
@@ -183,12 +183,12 @@ void loop()
     Serial.println(round(avgDistance));
   
     // send payload
-    if(counter % 5 == 0) {
+    if(counter % 1 == 0) {
       // transmit distance
       // generate and send the payload
      char payload[31];
   
-     String payloadString = buildPayloadString(round(avgDistance), 0.0);
+     String payloadString = buildPayloadString(round(avgDistance), getTemperatureInF());
      payloadString.toCharArray(payload, 31);
  
      Serial.print("payload: ");
@@ -234,7 +234,7 @@ String buildPayloadString(float data1, float data2) {
   
   String payloadString = "";
   
-  payloadString.concat("BLE3,"); // Node indicator
+  payloadString.concat("BLE2,"); // Node indicator
   payloadString.concat("1,"); // number of data elements to expect
   payloadString.concat(data1);
   payloadString.concat(",");
@@ -243,4 +243,37 @@ String buildPayloadString(float data1, float data2) {
   
   return payloadString;
 }
+
+float getTemperatureInF() {
+
+  bluetooth.write("AT+TEMP?");
+  Serial.println("AT+TEMP?");
+  delay(50);
+  
+  String tempC = "";
+
+  float tempF = 0.0;
+  
+  while (bluetooth.available() > 0) {
+     char character;
+       character = bluetooth.read();
+       Serial.print(character);
+       tempC = tempC + character;
+   }
+
+   int lastColon = tempC.lastIndexOf(":");
+   tempC = tempC.substring(lastColon+1);
+
+   if (tempC != "") {
+      Serial.print("tempC: ");
+      Serial.println(tempC);
+      tempF = tempC.toFloat() * 1.8 + 32 - 9; // bs temp adjustment of 9 since reads too high.    
+   }
+
+   Serial.print("tempF: ");
+   Serial.println(tempF);
+
+   return tempF;
+}
+
 

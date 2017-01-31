@@ -51,7 +51,9 @@ const uint64_t pipes[2] = { 0xF0F0F0F0E1LL,0xF0F0F0F0D2LL };
 
 
  // WP 1
-DeviceAddress Probe01 = { 0x28, 0x37, 0x1E, 0x66, 0x07, 0x00, 0x00, 0x4B }; // single probe
+//DeviceAddress Probe01 = { 0x28, 0x37, 0x1E, 0x66, 0x07, 0x00, 0x00, 0x4B }; // single probe
+
+DeviceAddress Probe01 = {0x28, 0xFF, 0xC0, 0x65, 0x07, 0x00, 0x00, 0x01 }; // single probe
 //DeviceAddress Probe02 = { 0x28, 0xEA, 0x58, 0x66, 0x07, 0x00, 0x00, 0xB0 }; // "4" // Air probe
 //DeviceAddress Probe02 = { 0x28, 0x55, 0x0A, 0x66, 0x07, 0x00, 0x00, 0x85 }; // "5" 
 
@@ -93,7 +95,7 @@ void loop() {
 
   float temp1 = displayTemperature(Probe01);  
   //float temp2 = displayTemperature(Probe02);  
-  float temp2 = 0/0;
+  float temp2 = 0;
   
   char payload[31];
   
@@ -112,14 +114,14 @@ void loop() {
   
   Serial.println("sent payload"); 
   
-  delay(20000);
+  delay(15000);
 }
 
 String buildPayloadString(float t1, float t2) {
   
   String payloadString = "";
   
-  payloadString.concat("TVROOM,"); // Node indicator
+  payloadString.concat("LIVING,"); // Node indicator
   payloadString.concat("1,"); // number of data elements to expect
   payloadString.concat(t1);
   payloadString.concat(",");
