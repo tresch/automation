@@ -89,19 +89,21 @@ void loop ()
    }
 
 
-  char payload[31];
+  if(dryerStatus == 1 || washerStatus == 1) {
+    char payload[31];
   
-  String payloadString = buildPayloadString(washerStatus, dryerStatus);
-  payloadString.toCharArray(payload, 31);
+    String payloadString = buildPayloadString(washerStatus, dryerStatus);
+    payloadString.toCharArray(payload, 31);
   
-  Serial.println(payload);
+    Serial.println(payload);
   
-  // send the payload over the radio
-  radio.stopListening();
-  bool ok = radio.write(&payload,strlen(payload));
-  radio.startListening(); 
+    // send the payload over the radio
+    radio.stopListening();
+    bool ok = radio.write(&payload,strlen(payload));
+    radio.startListening(); 
   
-  Serial.println("sent payload"); 
+    Serial.println("sent payload"); 
+  }
   
   delay(5000);
 }
